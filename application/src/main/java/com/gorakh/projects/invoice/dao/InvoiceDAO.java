@@ -1,8 +1,10 @@
 package com.gorakh.projects.invoice.dao;
 
 import com.gorakh.projects.invoice.model.Invoice;
-import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface InvoiceDAO {
-    public Invoice getInvoiceByID(int id);
+@Repository
+public interface InvoiceDAO extends JpaRepository<Invoice, Integer> {
+
 }

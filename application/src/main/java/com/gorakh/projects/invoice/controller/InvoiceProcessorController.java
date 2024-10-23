@@ -5,9 +5,10 @@ import com.gorakh.projects.invoice.service.InvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.Optional;
 
 @RestController
 public class InvoiceProcessorController {
@@ -18,18 +19,24 @@ public class InvoiceProcessorController {
 
     @GetMapping("/")
     public String hello(){
-        return "<h1>Hello from Intellij.</h1>";
+        return "Hello from Intellij using Spring JPA";
     }
 
     @GetMapping("/{id}")
     public Invoice getInvoice(@PathVariable Integer id){
         log.info("Incoming ID is: " + id);
 
-        Invoice result = invoiceService.getInvoice(id);
+        Optional<Invoice> result = invoiceService.getInvoice(id);
 
-        log.info("Result ID is: " + result.getId());
+        log.info("Result ID is: " + result.get().getId());
 
-        return result;
+        return result.orElseThrow();
+    }
+
+    @PostMapping("/")
+    public Invoice saveInvoice(@RequestBody Invoice invoice){
+        invoice.setDate(new Date());
+        return invoiceService.saveInvoice(invoice);
     }
 
 }

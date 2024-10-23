@@ -1,12 +1,17 @@
 package com.gorakh.projects.invoice.model;
 
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Entity
 @Component
+@Table(name = "invoices")
 public class Invoice {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String vendor;
     private String product;
